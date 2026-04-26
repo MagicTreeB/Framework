@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MMO.Core.Middlewares\MMO.Core.Middlewares.csproj" />
+    <ProjectReference Include="..\MMO.Core.Share\MMO.Core.Share.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Jwt\" />
+  </ItemGroup>
+
+</Project>
