@@ -45,37 +45,26 @@ public static class ScalarConfiguration
             if (await featureManager.IsEnabledAsync("ScalarUI"))
             {
                 // Map Scalar for direct access (no basePath)
-                app.MapScalarApiReference(options =>
+                var normalizedUrl = url.TrimStart('/');
+                app.MapScalarApiReference($"/{normalizedUrl}", options =>
                 {
                     options.WithTitle(title)
                            .WithTheme(theme)
                            .WithDefaultHttpClient(ScalarTarget.Shell, ScalarClient.HttpClient)
                            .WithTestRequestButton(true);
-                    
-                    // Direct access uses standard OpenAPI path
-                    if (!string.IsNullOrWhiteSpace(url))
-                    {
-                        var normalizedUrl = url.TrimStart('/');
-                        options.WithEndpointPrefix($"/{normalizedUrl}/{{documentName}}");
-                    }
                 });
-                
+
                 // Map Scalar for Gateway access if basePath is provided
                 if (!string.IsNullOrWhiteSpace(basePath))
                 {
                     var normalizedBasePath = basePath.Trim('/');
-                    var normalizedUrl = url.TrimStart('/');
-                    
-                    app.MapScalarApiReference(options =>
+                    app.MapScalarApiReference($"/{normalizedBasePath}/{normalizedUrl}", options =>
                     {
                         options.WithTitle(title)
                                .WithTheme(theme)
                                .WithDefaultHttpClient(ScalarTarget.Shell, ScalarClient.HttpClient)
                                .WithTestRequestButton(true)
                                .WithOpenApiRoutePattern($"/{normalizedBasePath}/openapi/{{documentName}}.json");
-                        
-                        // Gateway access uses basePath prefix
-                        options.WithEndpointPrefix($"/{normalizedBasePath}/{normalizedUrl}/{{documentName}}");
                     });
                 }
             }

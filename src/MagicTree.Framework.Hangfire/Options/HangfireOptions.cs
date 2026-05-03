@@ -88,7 +88,7 @@ public class WorkerOptions
     /// Queue names to process. Default: ["default"]
     /// Multiple queues allow job prioritization
     /// </summary>
-    public string[] Queues { get; set; } = new[] { "default" };
+    public string[] Queues { get; set; } = Array.Empty<string>();
 
     /// <summary>
     /// Job polling interval in seconds. Default: 15

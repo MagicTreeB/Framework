@@ -13,7 +13,7 @@ public class SuccessResponseDtoTests
         // Assert
         dto.Success.Should().BeTrue();
         dto.Message.Should().BeEmpty();
-        dto.StatusCode.Should().Be(200);
+        dto.StatusCode.Should().Be((StatusCode)200);
         dto.Timestamp.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
         dto.TraceId.Should().BeNull();
         dto.Metadata.Should().BeNull();
@@ -24,7 +24,7 @@ public class SuccessResponseDtoTests
     {
         // Arrange
         var message = "Success";
-        var statusCode = 201;
+        var statusCode = (StatusCode)201;
         var timestamp = DateTime.UtcNow.AddMinutes(-5);
         var traceId = Guid.NewGuid().ToString();
         var metadata = new Dictionary<string, object> { ["key"] = "value" };
@@ -60,7 +60,7 @@ public class SuccessResponseDtoTests
         // Assert
         dto.Success.Should().BeTrue();
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(200);
+        dto.StatusCode.Should().Be((StatusCode)200);
     }
 
     [Fact]
@@ -71,7 +71,7 @@ public class SuccessResponseDtoTests
 
         // Assert
         dto.Message.Should().Be("Operation completed successfully");
-        dto.StatusCode.Should().Be(200);
+        dto.StatusCode.Should().Be((StatusCode)200);
     }
 
     [Fact]
@@ -86,7 +86,7 @@ public class SuccessResponseDtoTests
         // Assert
         dto.Success.Should().BeTrue();
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(201);
+        dto.StatusCode.Should().Be((StatusCode)201);
     }
 
     [Fact]
@@ -97,7 +97,7 @@ public class SuccessResponseDtoTests
 
         // Assert
         dto.Message.Should().Be("Resource created successfully");
-        dto.StatusCode.Should().Be(201);
+        dto.StatusCode.Should().Be((StatusCode)201);
     }
 
     [Fact]
@@ -112,7 +112,7 @@ public class SuccessResponseDtoTests
         // Assert
         dto.Success.Should().BeTrue();
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(202);
+        dto.StatusCode.Should().Be((StatusCode)202);
     }
 
     [Fact]
@@ -123,7 +123,7 @@ public class SuccessResponseDtoTests
 
         // Assert
         dto.Message.Should().Be("Request accepted for processing");
-        dto.StatusCode.Should().Be(202);
+        dto.StatusCode.Should().Be((StatusCode)202);
     }
 
     [Fact]
@@ -170,7 +170,7 @@ public class SuccessResponseDtoTests
         dto.Success.Should().BeTrue();
         dto.Data.Should().BeEquivalentTo(data);
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(200);
+        dto.StatusCode.Should().Be((StatusCode)200);
     }
 
     [Fact]
@@ -185,7 +185,7 @@ public class SuccessResponseDtoTests
         // Assert
         dto.Data.Should().Be(data);
         dto.Message.Should().Be("Operation completed successfully");
-        dto.StatusCode.Should().Be(200);
+        dto.StatusCode.Should().Be((StatusCode)200);
     }
 
     [Fact]
@@ -202,7 +202,7 @@ public class SuccessResponseDtoTests
         dto.Success.Should().BeTrue();
         dto.Data.Should().BeEquivalentTo(data);
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(201);
+        dto.StatusCode.Should().Be((StatusCode)201);
     }
 
     [Fact]
@@ -217,7 +217,7 @@ public class SuccessResponseDtoTests
         // Assert
         dto.Data.Should().Be(data);
         dto.Message.Should().Be("Resource created successfully");
-        dto.StatusCode.Should().Be(201);
+        dto.StatusCode.Should().Be((StatusCode)201);
     }
 
     [Fact]
@@ -234,7 +234,7 @@ public class SuccessResponseDtoTests
         dto.Success.Should().BeTrue();
         dto.Data.Should().BeEquivalentTo(data);
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(202);
+        dto.StatusCode.Should().Be((StatusCode)202);
     }
 
     [Fact]
@@ -249,7 +249,7 @@ public class SuccessResponseDtoTests
         // Assert
         dto.Data.Should().Be(data);
         dto.Message.Should().Be("Request accepted for processing");
-        dto.StatusCode.Should().Be(202);
+        dto.StatusCode.Should().Be((StatusCode)202);
     }
 
     [Fact]
@@ -269,7 +269,7 @@ public class SuccessResponseDtoTests
         dto.Success.Should().BeTrue();
         dto.Data.Should().BeEquivalentTo(data);
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(200);
+        dto.StatusCode.Should().Be((StatusCode)200);
         dto.Metadata.Should().ContainKey("pagination");
         
         var pagination = dto.Metadata!["pagination"];
@@ -361,6 +361,6 @@ public class SuccessResponseDtoTests
         // Assert
         dto.Should().BeAssignableTo<SuccessResponseDto>();
         dto.Success.Should().BeTrue();
-        dto.StatusCode.Should().Be(200);
+        dto.StatusCode.Should().Be((StatusCode)200);
     }
 }

@@ -97,7 +97,7 @@ public class HangfireOptionsTests
 
         // Assert
         options.WorkerCount.Should().Be(20);
-        options.Queues.Should().BeEquivalentTo(new[] { "default" });
+        options.Queues.Should().BeEmpty();
         options.PollingIntervalSeconds.Should().Be(15);
     }
 

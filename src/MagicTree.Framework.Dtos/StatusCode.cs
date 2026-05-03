@@ -13,9 +13,10 @@ public enum StatusCode
 
     #region Prefixed with "4"
     BadRequest = 400,
-    NotFound = 404,
     Unauthorized = 401,
     Forbidden = 403,
+    NotFound = 404,
+    Conflict = 409,
 
     #endregion
 

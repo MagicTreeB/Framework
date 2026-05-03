@@ -36,6 +36,19 @@ public static class HangfireExtensions
         // Register options
         services.Configure<HangfireOptions>(configuration.GetSection(HangfireOptions.SectionName));
 
+        // Validate storage configuration eagerly before registering
+        if (!options.StorageType.Equals("SqlServer", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException(
+                $"Unsupported Hangfire StorageType: {options.StorageType}. Only 'SqlServer' is currently supported.");
+        }
+
+        if (string.IsNullOrEmpty(options.ConnectionString))
+        {
+            throw new InvalidOperationException(
+                "Hangfire ConnectionString is required when StorageType is SqlServer");
+        }
+
         // Configure Hangfire storage
         services.AddHangfire(config =>
         {
@@ -43,41 +56,28 @@ public static class HangfireExtensions
             config.UseSimpleAssemblyNameTypeSerializer();
             config.UseRecommendedSerializerSettings();
 
-            if (options.StorageType.Equals("SqlServer", StringComparison.OrdinalIgnoreCase))
+            config.UseSqlServerStorage(options.ConnectionString, new SqlServerStorageOptions
             {
-                if (string.IsNullOrEmpty(options.ConnectionString))
-                {
-                    throw new InvalidOperationException(
-                        "Hangfire ConnectionString is required when StorageType is SqlServer");
-                }
-
-                config.UseSqlServerStorage(options.ConnectionString, new SqlServerStorageOptions
-                {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                    QueuePollInterval = TimeSpan.FromSeconds(options.Worker.PollingIntervalSeconds),
-                    UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true,
-                    SchemaName = "Hangfire"
-                });
-            }
-            else
-            {
-                throw new InvalidOperationException(
-                    $"Unsupported Hangfire StorageType: {options.StorageType}. Only 'SqlServer' is currently supported.");
-            }
+                CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                QueuePollInterval = TimeSpan.FromSeconds(options.Worker.PollingIntervalSeconds),
+                UseRecommendedIsolationLevel = true,
+                DisableGlobalLocks = true,
+                SchemaName = "Hangfire"
+            });
         });
 
         // Add Hangfire server with worker configuration
         services.AddHangfireServer(serverOptions =>
         {
             serverOptions.WorkerCount = options.Worker.WorkerCount;
-            serverOptions.Queues = options.Worker.Queues;
+            serverOptions.Queues = options.Worker.Queues.Length > 0 ? options.Worker.Queues : new[] { "default" };
             serverOptions.SchedulePollingInterval = TimeSpan.FromSeconds(options.Worker.PollingIntervalSeconds);
         });
 
         // Register job service
         services.AddScoped<IJobService, JobService>();
+        services.AddSingleton<IRecurringJobManager, RecurringJobManager>();
 
         return services;
     }

@@ -150,6 +150,6 @@ public class BasedDtoTests
         dto.CreatedBy.Should().Be("system");
         dto.UpdatedOn.Should().Be(updateTime);
         dto.UpdatedBy.Should().Be("admin");
-        dto.UpdatedOn.Should().BeAfter(dto.CreatedOn);
+        dto.UpdatedOn!.Value.Should().BeAfter(dto.CreatedOn!.Value);
     }
 }

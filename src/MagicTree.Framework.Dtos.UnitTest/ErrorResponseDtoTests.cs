@@ -13,7 +13,7 @@ public class ErrorResponseDtoTests
         // Assert
         dto.Success.Should().BeFalse();
         dto.Message.Should().BeEmpty();
-        dto.StatusCode.Should().Be(0);
+        dto.StatusCode.Should().Be((StatusCode)0);
         dto.Errors.Should().BeEmpty();
         dto.ErrorCode.Should().BeNull();
         dto.Timestamp.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
@@ -26,7 +26,7 @@ public class ErrorResponseDtoTests
     {
         // Arrange
         var message = "Test error";
-        var statusCode = 400;
+        var statusCode = (StatusCode)400;
         var errors = new List<string> { "Error 1", "Error 2" };
         var errorCode = "TEST_ERROR";
         var timestamp = DateTime.UtcNow.AddMinutes(-5);
@@ -70,7 +70,7 @@ public class ErrorResponseDtoTests
         // Assert
         dto.Success.Should().BeFalse();
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(400);
+        dto.StatusCode.Should().Be((StatusCode)400);
         dto.Errors.Should().BeEquivalentTo(errors);
         dto.ErrorCode.Should().Be(errorCode);
     }
@@ -82,7 +82,7 @@ public class ErrorResponseDtoTests
         var dto = ErrorResponseDto.BadRequest("Invalid data");
 
         // Assert
-        dto.StatusCode.Should().Be(400);
+        dto.StatusCode.Should().Be((StatusCode)400);
         dto.Errors.Should().BeEmpty();
     }
 
@@ -99,7 +99,7 @@ public class ErrorResponseDtoTests
         // Assert
         dto.Success.Should().BeFalse();
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(401);
+        dto.StatusCode.Should().Be((StatusCode)401);
         dto.ErrorCode.Should().Be(errorCode);
     }
 
@@ -111,7 +111,7 @@ public class ErrorResponseDtoTests
 
         // Assert
         dto.Message.Should().Be("Unauthorized access");
-        dto.StatusCode.Should().Be(401);
+        dto.StatusCode.Should().Be((StatusCode)401);
         dto.ErrorCode.Should().Be("UNAUTHORIZED");
     }
 
@@ -128,7 +128,7 @@ public class ErrorResponseDtoTests
         // Assert
         dto.Success.Should().BeFalse();
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(403);
+        dto.StatusCode.Should().Be((StatusCode)403);
         dto.ErrorCode.Should().Be(errorCode);
     }
 
@@ -140,7 +140,7 @@ public class ErrorResponseDtoTests
 
         // Assert
         dto.Message.Should().Be("Access forbidden");
-        dto.StatusCode.Should().Be(403);
+        dto.StatusCode.Should().Be((StatusCode)403);
         dto.ErrorCode.Should().Be("FORBIDDEN");
     }
 
@@ -157,7 +157,7 @@ public class ErrorResponseDtoTests
         // Assert
         dto.Success.Should().BeFalse();
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(404);
+        dto.StatusCode.Should().Be((StatusCode)404);
         dto.ErrorCode.Should().Be(errorCode);
     }
 
@@ -169,7 +169,7 @@ public class ErrorResponseDtoTests
 
         // Assert
         dto.Message.Should().Be("Resource not found");
-        dto.StatusCode.Should().Be(404);
+        dto.StatusCode.Should().Be((StatusCode)404);
         dto.ErrorCode.Should().Be("NOT_FOUND");
     }
 
@@ -186,7 +186,7 @@ public class ErrorResponseDtoTests
         // Assert
         dto.Success.Should().BeFalse();
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(409);
+        dto.StatusCode.Should().Be((StatusCode)409);
         dto.ErrorCode.Should().Be(errorCode);
     }
 
@@ -197,7 +197,7 @@ public class ErrorResponseDtoTests
         var dto = ErrorResponseDto.Conflict("Duplicate entry");
 
         // Assert
-        dto.StatusCode.Should().Be(409);
+        dto.StatusCode.Should().Be((StatusCode)409);
         dto.ErrorCode.Should().Be("CONFLICT");
     }
 
@@ -214,7 +214,7 @@ public class ErrorResponseDtoTests
         // Assert
         dto.Success.Should().BeFalse();
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(500);
+        dto.StatusCode.Should().Be((StatusCode)500);
         dto.ErrorCode.Should().Be(errorCode);
     }
 
@@ -226,7 +226,7 @@ public class ErrorResponseDtoTests
 
         // Assert
         dto.Message.Should().Be("An internal server error occurred");
-        dto.StatusCode.Should().Be(500);
+        dto.StatusCode.Should().Be((StatusCode)500);
         dto.ErrorCode.Should().Be("INTERNAL_ERROR");
     }
 
@@ -247,7 +247,7 @@ public class ErrorResponseDtoTests
         // Assert
         dto.Success.Should().BeFalse();
         dto.Message.Should().Be(message);
-        dto.StatusCode.Should().Be(400);
+        dto.StatusCode.Should().Be((StatusCode)400);
         dto.ErrorCode.Should().Be("VALIDATION_ERROR");
         dto.Errors.Should().HaveCount(3);
         dto.Errors.Should().Contain("Email: Email is required");

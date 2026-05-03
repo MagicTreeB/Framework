@@ -87,6 +87,19 @@ public record ErrorResponseDto : BasedResponseDto
 
 
     /// <summary>
+    /// Creates a Conflict (409) error response.
+    /// </summary>
+    public static ErrorResponseDto Conflict(string message, string? errorCode = null)
+    {
+        return new ErrorResponseDto
+        {
+            Message = message,
+            StatusCode = StatusCode.Conflict,
+            ErrorCode = errorCode ?? "CONFLICT"
+        };
+    }
+
+    /// <summary>
     /// Creates an InternalServerError (500) error response.
     /// </summary>
     public static ErrorResponseDto InternalServerError(string message = "An internal server error occurred", string? errorCode = null)
